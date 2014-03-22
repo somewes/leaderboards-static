@@ -32,7 +32,7 @@ module.exports = function (grunt) {
                 ]
             }
         },
-        
+
         connect: {
             options: {
                 port: 9000,
@@ -53,6 +53,12 @@ module.exports = function (grunt) {
                     base: '<%= config.dist %>'
                 }
             }
+        },
+
+        bower: {
+            target: {
+                rjsConfig: '<%= config.app %>/config.js'
+            }
         }
     });
 
@@ -67,4 +73,6 @@ module.exports = function (grunt) {
             'watch'
         ]);
     });
+
+    grunt.registerTask('update', ['npm-install', 'bower-install-simple', 'bower']);
 };

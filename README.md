@@ -1,14 +1,19 @@
-# Contributing:
+This is the static content for the SRL leaderboards.
 
-##You should know
+##Info
 
-* Javascript syntax and best practices
-* HTML and DOM best practices
-* How to work with the console on your OS
-* How to use Git
-	- If you don't have much experience, use the official Github app [(Mac)](http://mac.github.com/) [(Windows)](http://windows.github.com/)
+* Git is used for source control
+* Node.js (namely npm and grunt) is used for development and dev dependency management
+* Bower is used for frontend dependency management
 
 ##Getting started
 
-* Install Git and add it to your PATH
-* Install Node.js and add it to your PATH
+* Install [Git](http://git-scm.com/) and add it to your PATH or install the Github app [(Mac)](http://mac.github.com/) [(Windows)](http://windows.github.com/)
+* Install [Node.js](http://nodejs.org/) and add it to your PATH
+* Clone this repo locally and navigate to it in your console
+* Install grunt-cli:
+	- `npm install -g grunt-cli`
+* Install the npm packages while in the base repo directory (only needs to be run once):
+	- `npm install`
+* Run the Grunt update task to install any missing or out-of-date npm or bower dependencies (run whenever they change):
+	- `grunt update`

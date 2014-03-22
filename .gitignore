@@ -20,4 +20,7 @@ Session.vim
 .grunt
 
 node_modules
+
+site/lib
+
 dist
