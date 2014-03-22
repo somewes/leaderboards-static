@@ -1,0 +1,14 @@
+{
+  "name": "scaffold",
+  "version": "0.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "load-grunt-tasks": "~0.4.0",
+    "grunt-contrib-connect": "~0.7.1",
+    "grunt-contrib-watch": "~0.6.1"
+  },
+  "engines": {
+    "node": "~0.10"
+  }
+}
