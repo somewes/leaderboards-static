@@ -1,1 +1,7 @@
-<strong>Index</strong>
+<input name="Search games" placeholder="Search games" value="{{searchtext}}" />
+
+<ul>
+{{#games}}
+	<li><a href="/game/{{abbreviation}}">{{name}}</a></li>
+{{/games}}
+</ul>
