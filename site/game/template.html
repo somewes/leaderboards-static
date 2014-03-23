@@ -1,0 +1,11 @@
+<div><strong>{{ game.name }}</strong></div>
+
+<div><a href="/game/{{ game.abbreviation }}/submit">Submit a Run</a></div>
+
+<ul>
+{{# game.filters }}
+	
+	<li><a href="javascript:void(0)" on-click="change-filter:{{name}}">{{name}}</a></li>
+
+{{/ game.filters }}
+</ul>
