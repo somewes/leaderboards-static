@@ -15,5 +15,12 @@ This is the static content for the SRL leaderboards.
 	- `npm install -g grunt-cli`
 * Install the npm packages while in the base repo directory (only needs to be run once):
 	- `npm install`
-* Run the Grunt update task to install any missing or out-of-date npm or bower dependencies (run whenever they change):
+* Run the Grunt update task to install any missing or out-of-date npm and bower dependencies (run whenever they change):
 	- `grunt update`
+
+##Grunt tasks
+
+* `grunt update`
+	- Installs or updates npm and bower dependencies
+* `grunt serve`
+	- Starts the development server on the site/ folder. Automatically reloads when files are changed.
