@@ -2,6 +2,12 @@
 
 <ul>
 {{#games}}
+
+	{{# contains(name, searchtext) }}
+
 	<li><a href="/game/{{abbreviation}}">{{name}}</a></li>
+	
+	{{/ contains }}
+
 {{/games}}
 </ul>
