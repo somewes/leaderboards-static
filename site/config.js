@@ -1,4 +1,5 @@
 require.config({
+  baseUrl: '/',
   paths: {
     rv: "lib/requirejs-ractive/rv",
     rvc: "lib/requirejs-ractive/rvc",
