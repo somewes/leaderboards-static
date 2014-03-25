@@ -3,9 +3,9 @@
 <div><a href="/game/{{ game.abbreviation }}/submit">Submit a Run</a></div>
 
 <ul>
-	<li><a href="javascript:void(0)" on-click="change-filter-game"><%- game.name %></a></li>
+	<li><a href="javascript:void(0)" on-click="change-filter-game">{{ game.name }}</a></li>
 	{{# game.filters }}
-	<li><a href="javascript:void(0)" on-click="change-filter:{{name}}">{{name}}</a></li>
+	<li><a href="javascript:void(0)" on-click="change-filter:{{name}}">{{ name }}</a></li>
 	{{/ game.filters }}
 	<li><a href="javascript:void(0)" on-click="change-filter-all">All runs</a></li>
 </ul>
