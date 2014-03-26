@@ -9,3 +9,36 @@
 	{{/ game.filters }}
 	<li><a href="javascript:void(0)" on-click="change-filter-all">All runs</a></li>
 </ul>
+
+				   	  	<!-- <%- run.runner %>, <%= run.formattedTime %>
+
+				   	  	<div class="run_tag_list">
+
+				   	  		<div class="run_platform">
+
+				   	  			<%- _.where(platforms, { id: run.platform }).name %>
+
+				   	  		</div>
+
+				   	  		<% _.forOwn(run.tags, function (value, name) { %>
+
+				   	  				<div class="run_tag">
+				   	  					<%- name %>: <%- value %>
+				   	  				</div>
+
+				   	  		<% }); %>
+
+				   	  	</div> -->
+
+<ul>
+{{# filterRuns(filter, game.runs) }}
+	<li>
+		<div><strong>{{ runner }}</strong>, <em>{{ formatTime(time) }}</em></div>
+	</li>
+{{/ game.runs }}
+</ul>
+
+
+
+
+
