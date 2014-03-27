@@ -30,11 +30,59 @@
 
 				   	  	</div> -->
 
+{{# allRuns }}
+
+<h2>All:</h2>
+
 <ul>
-{{# filterRuns(filter, game.runs) }}
+{{# filter.all:tag }}
+	<li>{{tag}} = {{.}}</li>
+{{/ filter.all }}
+	<li>
+		<input type="text" value="{{new_all_tag}}" placeholder="Tag" />
+		<input type="text" value="{{new_all_tag_value}}" placeholder="Value" />
+		<button on-click="add-all">Add</button>
+	</li>
+</ul>
+
+
+<h2>Any:</h2>
+
+<ul>
+{{# filter.any:tag }}
+	<li>{{tag}} = {{.}}</li>
+{{/ filter.any }}
+	<li>
+		<input type="text" value="{{new_any_tag}}" placeholder="Tag" />
+		<input type="text" value="{{new_any_tag_value}}" placeholder="Value" />
+		<button on-click="add-any">Add</button>
+	</li>
+</ul>
+
+
+<h2>Not:</h2>
+
+<ul>
+{{# filter.not:tag }}
+	<li>{{tag}} = {{.}}</li>
+{{/ filter.not }}
+	<li>
+		<input type="text" value="{{new_not_tag}}" placeholder="Tag" />
+		<input type="text" value="{{new_not_tag_value}}" placeholder="Value" />
+		<button on-click="add-not">Add</button>
+	</li>
+</ul>
+
+
+{{/ allRuns }}
+
+<ul>
+{{# game.runs }}
+	{{# filterRun(filter, .) }}
 	<li>
 		<div><strong>{{ runner }}</strong>, <em>{{ formatTime(time) }}</em></div>
 	</li>
+	{{/ filter }}
 {{/ game.runs }}
 </ul>
 
