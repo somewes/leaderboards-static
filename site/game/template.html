@@ -35,12 +35,20 @@
 <h2>All:</h2>
 
 <ul>
-{{# filter.all:tag }}
+{{# filter.all:tag }}      
 	<li>{{tag}} = {{.}}</li>
 {{/ filter.all }}
 	<li>
-		<input type="text" value="{{new_all_tag}}" placeholder="Tag" />
-		<input type="text" value="{{new_all_tag_value}}" placeholder="Value" />
+		<select value="{{new_all_tag}}">
+		{{# game.tags:tag }}
+			<option value="{{tag}}">{{tag}}</option>
+		{{/ game.tags }}
+		</select>
+		<select value="{{new_all_tag_value}}">
+		{{# game.tags[new_all_tag].value }}
+			<option value="{{.}}">{{.}}</option>
+		{{/ game.tags }}
+		</select>
 		<button on-click="add-all">Add</button>
 	</li>
 </ul>
