@@ -25,4 +25,4 @@ define(function () {
             "generation": 7
         }
     ];
-}]);
+});
