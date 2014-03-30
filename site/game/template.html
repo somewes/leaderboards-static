@@ -10,25 +10,6 @@
 	<li><a href="javascript:void(0)" on-click="change-filter-all">All runs</a></li>
 </ul>
 
-				   	  	<!-- <%- run.runner %>, <%= run.formattedTime %>
-
-				   	  	<div class="run_tag_list">
-
-				   	  		<div class="run_platform">
-
-				   	  			<%- _.where(platforms, { id: run.platform }).name %>
-
-				   	  		</div>
-
-				   	  		<% _.forOwn(run.tags, function (value, name) { %>
-
-				   	  				<div class="run_tag">
-				   	  					<%- name %>: <%- value %>
-				   	  				</div>
-
-				   	  		<% }); %>
-
-				   	  	</div> -->
 
 {{# allRuns }}
 
@@ -61,8 +42,16 @@
 	<li>{{tag}} = {{.}}</li>
 {{/ filter.any }}
 	<li>
-		<input type="text" value="{{new_any_tag}}" placeholder="Tag" />
-		<input type="text" value="{{new_any_tag_value}}" placeholder="Value" />
+		<select value="{{new_any_tag}}">
+		{{# game.tags:tag }}
+			<option value="{{tag}}">{{tag}}</option>
+		{{/ game.tags }}
+		</select>
+		<select value="{{new_any_tag_value}}">
+		{{# game.tags[new_any_tag].value }}
+			<option value="{{.}}">{{.}}</option>
+		{{/ game.tags }}
+		</select>
 		<button on-click="add-any">Add</button>
 	</li>
 </ul>
@@ -75,20 +64,34 @@
 	<li>{{tag}} = {{.}}</li>
 {{/ filter.not }}
 	<li>
-		<input type="text" value="{{new_not_tag}}" placeholder="Tag" />
-		<input type="text" value="{{new_not_tag_value}}" placeholder="Value" />
+		<select value="{{new_not_tag}}">
+		{{# game.tags:tag }}
+			<option value="{{tag}}">{{tag}}</option>
+		{{/ game.tags }}
+		</select>
+		<select value="{{new_not_tag_value}}">
+		{{# game.tags[new_not_tag].value }}
+			<option value="{{.}}">{{.}}</option>
+		{{/ game.tags }}
+		</select>
 		<button on-click="add-not">Add</button>
 	</li>
 </ul>
 
-
 {{/ allRuns }}
+
 
 <ul>
 {{# game.runs }}
 	{{# filterRun(filter, .) }}
 	<li>
 		<div><strong>{{ runner }}</strong>, <em>{{ formatTime(time) }}</em></div>
+		<div>
+			<span>Platform: {{ _.findWhere(platforms, { id: platform }).name }}
+			{{# tags:name }}
+				<span>{{name}}: {{.}}</span>
+			{{/ tags }}
+		</div>
 	</li>
 	{{/ filter }}
 {{/ game.runs }}

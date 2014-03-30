@@ -1,7 +1,8 @@
-define(['lodash', 'moment', 'Ractive', 'rv!./template', 'data/games/sm64'], function (_, moment, Ractive, template, game) {
+define(['lodash', 'moment', 'Ractive', 'rv!./template', 'data/games/sm64', 'data/platforms'], function (_, moment, Ractive, template, game, platforms) {
 	var data = {
 		_: _,
 		game: game,
+		platforms: platforms,
 		filter: {},
 		allRuns: false
 	};
@@ -84,7 +85,7 @@ define(['lodash', 'moment', 'Ractive', 'rv!./template', 'data/games/sm64'], func
 			}
 		}
 
-		if (_.size(filter.all) > 0) {
+		if (_.size(filter.not) > 0) {
 			if (_.any(filter.not, filterTest)) {
 				return false;
 			}
@@ -118,6 +119,10 @@ define(['lodash', 'moment', 'Ractive', 'rv!./template', 'data/games/sm64'], func
 	ractive.on('add-all', function (event) {
 		var filter = ractive.get('filter');
 
+		/// BUG WORKAROUND for Ractive 0.3.9 -- [TODO] Remove when 0.4.0 update comes
+		ractive.updateModel('new_all_tag_value');
+		///
+
 		filter.all[ractive.get('new_all_tag')] = ractive.get('new_all_tag_value');
 
 		ractive.set('filter', filter);
@@ -126,6 +131,10 @@ define(['lodash', 'moment', 'Ractive', 'rv!./template', 'data/games/sm64'], func
 	ractive.on('add-any', function (event) {
 		var filter = ractive.get('filter');
 
+		/// BUG WORKAROUND for Ractive 0.3.9 -- [TODO] Remove when 0.4.0 update comes
+		ractive.updateModel('new_any_tag_value');
+		///
+
 		filter.any[ractive.get('new_any_tag')] = ractive.get('new_any_tag_value');
 
 		ractive.set('filter', filter);
@@ -133,6 +142,10 @@ define(['lodash', 'moment', 'Ractive', 'rv!./template', 'data/games/sm64'], func
 
 	ractive.on('add-not', function (event) {
 		var filter = ractive.get('filter');
+
+		/// BUG WORKAROUND for Ractive 0.3.9 -- [TODO] Remove when 0.4.0 update comes
+		ractive.updateModel('new_not_tag_value');
+		///
 
 		filter.not[ractive.get('new_not_tag')] = ractive.get('new_not_tag_value');
 
