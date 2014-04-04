@@ -1,0 +1,19 @@
+<form on-submit="submit" action="">
+	<label for="username">Username</label>
+	<input type="text" name="username" id="username" placeholder="Username" value="{{ username }}">
+	<label for="password">Password</label>
+	<input type="text" name="password" id="password" placeholder="Password" value="{{ password }}">
+	<input type="submit" name="login" value="Login">
+</form>
+
+{{# success }}
+<p style="color: green;">
+	<strong>Login successful! API key cookie set for domain.</strong>
+</p>
+{{/ success }}
+
+{{# error }}
+<p style="color: red;">
+	<strong>Error {{ status }}: {{ message }}</strong>
+</p>
+{{/ error }}

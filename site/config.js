@@ -7,6 +7,8 @@ require.config({
     'amd-loader': 'lib/requirejs-ractive/amd-loader',
     Ractive: 'lib/Ractive/build/Ractive',
     lodash: 'lib/lodash/dist/lodash.compat',
-    moment: 'lib/moment/moment'
+    moment: 'lib/moment/moment',
+    jquery: 'lib/jquery/dist/jquery',
+    'jquery-cookie': 'lib/jquery-cookie/jquery.cookie'
   }
 });
