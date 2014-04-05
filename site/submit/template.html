@@ -1,9 +1,51 @@
-<form>
+<form on-submit="submit" action="">
 	<div>
-		<label>
-			Time:
-			<input type="text" value="{{ timeinput }}" placeholder="HH:MM:SS.MMM or plaintext (2 hours, 3 mins, etc.)">
-		</label>
+		<label for="timeinput">Time:</label>
+		<input id="timeinput" type="text" value="{{ timeinput }}" placeholder="HH:MM:SS.MMM or plaintext (2 hours, 3 mins, etc.)">
 		<span>{{ formatTime(time) }}</span>
 	</div>
+	<div>
+		<label for="videoinput">Video:</label>
+		<input id="videoinput" type="text" value="{{ video }}" placeholder="Video URL">
+	</div>
+	<div>
+		<label for="commentsinput">Comments:</label>
+		<input id="commentsinput" type="text" value="{{ comments }}" placeholder="Run comments">
+	</div>
+	<!-- <div>
+		Platform:
+		<select value="{{ platform }}">
+		{{# platforms }}
+			<option value="{{ id }}">{{ name }}</option>
+		{{/ platforms }}
+		</select>
+	</div> -->
+	<div>
+		<h3>Timed Tags <span style="margin-left: 20px; color: grey;">These are required for submission</span></h3>
+		<ul>
+		{{# timedtags }}
+		<li>
+			<span>{{ name }}</span>
+			<tagvalueselect tag="{{ . }}"/>
+		</li>
+		{{/ timedtags }}
+		</ul>
+	</div>
+	<div>
+		<h3>Untimed Tags <span style="margin-left: 20px; color: grey;">These are not required for submission</span></h3>
+		<ul>
+		{{# untimedtags }}
+		<li>
+			<span>{{ name }}</span>
+			<tagvalueselect tag="{{ . }}"/>
+		</li>
+		{{/ untimedtags }}
+		</ul>
+	</div>
+	{{# !info }}
+		<input type="submit" name="submit" value="Submit">
+	{{/ !info }}
+	{{# info }}
+		{{ info }}
+	{{/ info }}
 </form>
