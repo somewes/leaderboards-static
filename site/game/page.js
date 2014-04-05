@@ -1,5 +1,7 @@
 define(['lodash', 'moment', 'Ractive', 'rv!./template', 'leaderboards/api/games/sm64', 'leaderboards/api/platforms', 'components/tagvalueselect'], function (_, moment, Ractive, template, game, platforms) {
 
+
+	// TEMPORARY until server filter structure corrected
 	_.each(game.filters, function (filter) {
 		if (filter.all_filter) {
 			filter.all = filter.all_filter.tags;
@@ -16,6 +18,8 @@ define(['lodash', 'moment', 'Ractive', 'rv!./template', 'leaderboards/api/games/
 
 	game.tagvalues = _.flatten(_.pluck(game.tags, 'values'));
 
+
+	// TEMPORARY until tag types added to server
 	_.each(game.tags, function (tag) {
 		tag.type = 'list';
 	});

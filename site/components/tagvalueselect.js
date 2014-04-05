@@ -6,7 +6,7 @@ function ( Ractive ,  listTemplate            ,  booleanTemplate            ) {
 		'boolean': booleanTemplate
 	};
 
-	Ractive.components.tagselect = Ractive.extend({
+	Ractive.components.tagvalueselect = Ractive.extend({
 		template: '{{>innerTemplate}}',
 		beforeInit: function (options) {
 			var template = templates[options.data.tag.type];
@@ -14,7 +14,7 @@ function ( Ractive ,  listTemplate            ,  booleanTemplate            ) {
 			if (template) {
 				options.partials.innerTemplate = template;
 			} else {
-				throw "Error at tagselect component: Invalid tag type";
+				throw "Error at tagvalueselect component: Invalid tag type";
 			}
 		}
 	});
