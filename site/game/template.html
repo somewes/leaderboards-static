@@ -1,11 +1,11 @@
-<div><strong>{{ game.name }}</strong></div>
+<div><strong>{{ game.title }}</strong></div>
 
 <div><a href="/game/{{ game.abbreviation }}/submit">Submit a Run</a></div>
 
 <ul>
-	<li><a href="javascript:void(0)" on-click="change-filter-game">{{ game.name }}</a></li>
+	<li><a href="javascript:void(0)" on-click="change-filter-game">{{ game.title }}</a></li>
 	{{# game.filters }}
-	<li><a href="javascript:void(0)" on-click="change-filter:{{name}}">{{ name }}</a></li>
+	<li><a href="javascript:void(0)" on-click="change-filter:{{ id }}">{{ name }}</a></li>
 	{{/ game.filters }}
 	<li><a href="javascript:void(0)" on-click="change-filter-all">All runs</a></li>
 </ul>
@@ -16,21 +16,22 @@
 <h2>All:</h2>
 
 <ul>
-{{# filter.all:tag }}      
-	<li>{{tag}} = {{.}}</li>
+{{# filter.all }}      
+	<li>{{ tagset[tag].name }}: {{ name }}</li>
 {{/ filter.all }}
 	<li>
-		<select value="{{new_all_tag}}">
-		{{# game.tags:tag }}
-			<option value="{{tag}}">{{tag}}</option>
-		{{/ game.tags }}
-		</select>
-		<select value="{{new_all_tag_value}}">
-		{{# game.tags[new_all_tag].value }}
-			<option value="{{.}}">{{.}}</option>
-		{{/ game.tags }}
-		</select>
 		<button on-click="add-all">Add</button>
+		{{# addingAll }}
+			<select value="{{ new_all_tag }}">
+				<option value="">Tag</option>
+			{{# game.tags }}
+				<option value="{{id}}">{{name}}</option>
+			{{/ game.tags }}
+			</select>
+		{{/ addingAll }}
+		{{# new_all_tag }}
+			<tagselect selection="{{ new_all_tag_value }}" on-select="commit-all" tag="{{ tagset[new_all_tag] }}"/>
+		{{/ new_all_tag }}
 	</li>
 </ul>
 
@@ -38,21 +39,22 @@
 <h2>Any:</h2>
 
 <ul>
-{{# filter.any:tag }}
-	<li>{{tag}} = {{.}}</li>
+{{# filter.any }}      
+	<li>{{ tagset[tag].name }}: {{ name }}</li>
 {{/ filter.any }}
 	<li>
-		<select value="{{new_any_tag}}">
-		{{# game.tags:tag }}
-			<option value="{{tag}}">{{tag}}</option>
-		{{/ game.tags }}
-		</select>
-		<select value="{{new_any_tag_value}}">
-		{{# game.tags[new_any_tag].value }}
-			<option value="{{.}}">{{.}}</option>
-		{{/ game.tags }}
-		</select>
 		<button on-click="add-any">Add</button>
+		{{# addingAny }}
+			<select value="{{ new_any_tag }}">
+				<option value="">Tag</option>
+			{{# game.tags }}
+				<option value="{{id}}">{{name}}</option>
+			{{/ game.tags }}
+			</select>
+		{{/ addingAny }}
+		{{# new_any_tag }}
+			<tagselect selection="{{ new_any_tag_value }}" on-select="commit-any" tag="{{ tagset[new_any_tag] }}"/>
+		{{/ new_any_tag }}
 	</li>
 </ul>
 
@@ -60,44 +62,57 @@
 <h2>Not:</h2>
 
 <ul>
-{{# filter.not:tag }}
-	<li>{{tag}} = {{.}}</li>
+{{# filter.not }}      
+	<li>{{ tagset[tag].name }}: {{ name }}</li>
 {{/ filter.not }}
 	<li>
-		<select value="{{new_not_tag}}">
-		{{# game.tags:tag }}
-			<option value="{{tag}}">{{tag}}</option>
-		{{/ game.tags }}
-		</select>
-		<select value="{{new_not_tag_value}}">
-		{{# game.tags[new_not_tag].value }}
-			<option value="{{.}}">{{.}}</option>
-		{{/ game.tags }}
-		</select>
 		<button on-click="add-not">Add</button>
+		{{# addingNot }}
+			<select value="{{ new_not_tag }}">
+				<option value="">Tag</option>
+			{{# game.tags }}
+				<option value="{{id}}">{{name}}</option>
+			{{/ game.tags }}
+			</select>
+		{{/ addingNot }}
+		{{# new_not_tag }}
+			<tagselect selection="{{ new_not_tag_value }}" on-select="commit-not" tag="{{ tagset[new_not_tag] }}"/>
+		{{/ new_not_tag }}
 	</li>
 </ul>
 
 {{/ allRuns }}
 
 
+{{# gameFilter }}
+	{{# game.filters }}
+		<h2>{{ name }}</h2>
+		{{>runList}}
+	{{/ game.filters }}
+{{/ gameFilter }}
+
+{{# !gameFilter }}
+	{{# filter }}
+		{{>runList}}
+	{{/ filter }}
+{{/ !gameFilter }}
+
+
+<!-- {{>runList}} -->
 <ul>
-{{# game.runs }}
-	{{# filterRun(filter, .) }}
+{{# game.speedruns }}
+	{{# filterRun(../this, .) }}
 	<li>
-		<div><strong>{{ runner }}</strong>, <em>{{ formatTime(time) }}</em></div>
+		<div><strong>{{ user.username }}</strong>, <em>{{ formatTime(time) }}</em></div>
 		<div>
-			<span>Platform: {{ _.findWhere(platforms, { id: platform }).name }}
-			{{# tags:name }}
-				<span>{{name}}: {{.}}</span>
+			<span>
+			{{# tags }}
+				<span>{{ tagset[tagvalueset[id].tag].name }}: {{ tagvalueset[id].name }}</span>
 			{{/ tags }}
 		</div>
 	</li>
-	{{/ filter }}
-{{/ game.runs }}
+	{{/ filterRun }}
+{{/ game.speedruns }}
 </ul>
-
-
-
-
+<!-- {{/runList}} -->
 

@@ -1,11 +1,57 @@
-define(['lodash', 'moment', 'Ractive', 'rv!./template', 'data/games/sm64', 'data/platforms'], function (_, moment, Ractive, template, game, platforms) {
+define(['lodash', 'moment', 'Ractive', 'rv!./template', 'leaderboards/api/games/sm64', 'leaderboards/api/platforms', 'components/tagvalueselect'], function (_, moment, Ractive, template, game, platforms) {
+
+	_.each(game.filters, function (filter) {
+		if (filter.all_filter) {
+			filter.all = filter.all_filter.tags;
+		}
+
+		if (filter.any_filter) {
+			filter.any = filter.any_filter.tags;
+		}
+
+		if (filter.not_filter) {
+			filter.not = filter.not_filter.tags;
+		}
+	});
+
+	game.tagvalues = _.flatten(_.pluck(game.tags, 'values'));
+
+	_.each(game.tags, function (tag) {
+		tag.type = 'list';
+	});
+
 	var data = {
 		_: _,
 		game: game,
 		platforms: platforms,
-		filter: {},
+		filter: {
+			all: null,
+			any: null,
+			not: null
+		},
+		gameFilter: true,
 		allRuns: false
 	};
+
+	data.tagset = {};
+	_.each(game.tags, function (tag) {
+		data.tagset[tag.id] = tag;
+	});
+
+	data.tagvalueset = {};
+	_.each(game.tagvalues, function (tagvalue) {
+		data.tagvalueset[tagvalue.id] = tagvalue;
+	});
+
+	data.platformset = {};
+	_.each(platforms, function (platform) {
+		data.platformset[platform.id] = platform;
+	});
+
+	data.filterset = {};
+	_.each(game.filters, function (filter) {
+		data.filterset[filter.id] = filter;
+	});
 
 	data.formatTime = function (milliseconds) {
 		var duration = moment.duration(milliseconds);
@@ -43,49 +89,28 @@ define(['lodash', 'moment', 'Ractive', 'rv!./template', 'data/games/sm64', 'data
 		return t;
 	};
 
-	data.filterRuns = function (_filter, runs) {
-		if (!_filter) {
-			return runs;
-		}
-
-		var filter = function (combineFunc, filterSet) {
-			if (_.size(filterSet) > 0) {
-				runs = _.filter(runs, function (run) {
-					return combineFunc(filterSet, function (value, tag) {
-						return run.tags[tag] === value;
-					});
-				});
-			}
-		};
-	
-		filter(_.all, _filter.all);
-		filter(_.any, _filter.any);
-		filter(_.compose(function(f){return !f;}, _.all), _filter.not);
-		return runs;
-	};
-
 	data.filterRun = function (filter, run) {
-		var filterTest = function (val, tag) {
-			return run.tags[tag] === val;
+		var filterTest = function (tagvalue) {
+			return _.find(run.tags, { id: tagvalue.id });
 		};
 
 		if (typeof filter !== 'object') {
 			return true;
 		}
 
-		if (_.size(filter.all) > 0) {
+		if (filter.all) {
 			if (!_.all(filter.all, filterTest)) {
 				return false;
 			}
 		}
 
-		if (_.size(filter.any) > 0) {
+		if (filter.any) {
 			if (!_.any(filter.any, filterTest)) {
 				return false;
 			}
 		}
 
-		if (_.size(filter.not) > 0) {
+		if (filter.not) {
 			if (_.any(filter.not, filterTest)) {
 				return false;
 			}
@@ -102,53 +127,79 @@ define(['lodash', 'moment', 'Ractive', 'rv!./template', 'data/games/sm64', 'data
 	});
 
 	ractive.on('change-filter-game', function (event) {
+		ractive.set('gameFilter', true);
 		ractive.set('allRuns', false);
-
 	});
 
-	ractive.on('change-filter', function (event, filter) {
+	ractive.on('change-filter', function (event, filterid) {
 		ractive.set('allRuns', false);
-		ractive.set('filter', _.findWhere(game.filters, { name: filter }).filter);
+		ractive.set('gameFilter', false);
+		ractive.set('filter', _.findWhere(game.filters, { id: filterid }));
 	});
 
 	ractive.on('change-filter-all', function (event) {
-		ractive.set('filter', {any: {}, all: {}, not: {}});
+		ractive.set('filter', {all: null, any: null, not: null});
+		ractive.set('gameFilter', false);
 		ractive.set('allRuns', true);
 	});
 
 	ractive.on('add-all', function (event) {
-		var filter = ractive.get('filter');
+		ractive.set('addingAll', true);
+	});
 
-		/// BUG WORKAROUND for Ractive 0.3.9 -- [TODO] Remove when 0.4.0 update comes
-		ractive.updateModel('new_all_tag_value');
-		///
+	ractive.observe('new_all_tag_value', function (new_all_tag_value) {
+		if (new_all_tag_value) {
+			var filter = ractive.get('filter');
 
-		filter.all[ractive.get('new_all_tag')] = ractive.get('new_all_tag_value');
+			if (!filter.all) {
+				filter.all = [];
+			}
 
-		ractive.set('filter', filter);
+			filter.all.push(data.tagvalueset[new_all_tag_value]);
+
+			ractive.set('filter', filter);
+			ractive.set('addingAll', false);
+			ractive.set('new_all_tag', undefined);
+		}
 	});
 
 	ractive.on('add-any', function (event) {
-		var filter = ractive.get('filter');
+		ractive.set('addingAny', true);
+	});
 
-		/// BUG WORKAROUND for Ractive 0.3.9 -- [TODO] Remove when 0.4.0 update comes
-		ractive.updateModel('new_any_tag_value');
-		///
+	ractive.observe('new_any_tag_value', function (new_any_tag_value) {
+		if (new_any_tag_value) {
+			var filter = ractive.get('filter');
 
-		filter.any[ractive.get('new_any_tag')] = ractive.get('new_any_tag_value');
+			if (!filter.any) {
+				filter.any = [];
+			}
 
-		ractive.set('filter', filter);
+			filter.any.push(data.tagvalueset[new_any_tag_value]);
+
+			ractive.set('filter', filter);
+			ractive.set('addingAny', false);
+			ractive.set('new_any_tag', undefined);
+		}
 	});
 
 	ractive.on('add-not', function (event) {
-		var filter = ractive.get('filter');
+		ractive.set('addingNot', true);
+	});
 
-		/// BUG WORKAROUND for Ractive 0.3.9 -- [TODO] Remove when 0.4.0 update comes
-		ractive.updateModel('new_not_tag_value');
-		///
+	ractive.observe('new_not_tag_value', function (new_not_tag_value) {
+		if (new_not_tag_value) {
+			var filter = ractive.get('filter');
 
-		filter.not[ractive.get('new_not_tag')] = ractive.get('new_not_tag_value');
+			if (!filter.not) {
+				filter.not = [];
+			}
 
-		ractive.set('filter', filter);
+			filter.not.push(data.tagvalueset[new_not_tag_value]);
+
+			ractive.set('filter', filter);
+			ractive.set('addingNot', false);
+			ractive.set('new_not_tag', undefined);
+		}
 	});
 });
