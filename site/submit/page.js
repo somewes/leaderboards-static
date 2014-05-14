@@ -1,4 +1,4 @@
-define(['jquery', 'lodash', 'Ractive', 'rv!./template', 'leaderboards/api/games/sm64', 'leaderboards/api/platforms', 'components/tagvalueselect'], function ($, _, Ractive, template, game, platforms) {
+define(['jquery', 'lodash', 'Ractive', 'rv!./template', 'gameresource', 'platformresource', 'components/tagvalueselect'], function ($, _, Ractive, template, game, platforms) {
 
 	// TEMPORARY until tag types added to server
 	_.each(game.tags, function (tag) {
@@ -116,15 +116,18 @@ define(['jquery', 'lodash', 'Ractive', 'rv!./template', 'leaderboards/api/games/
 
 		ractive.set('info', 'Submitting...');
 
+		var tagvalues = _.pluck(ractive.get('timedtags'), 'selection');
+
 		$.post('/leaderboards/api/speedrun/', {
 			user: 2,
+			platform: 1,
 			game: game.id,
 			time: ractive.get('time'),
 			video: ractive.get('video'),
 			comments: ractive.get('comments'),
-			tags: [],
+			tags: tagvalues,
 			username: 'speedrunner',
-			api_key: 'a87e33657f5f6796bb3a57ecc213f712edf02088'
+			api_key: '339960db427cbccc9589509a8c3f313f30f3b265'
 		}).done(function (response) {
 			ractive.set('info', 'Success!');
 		}).fail(function (response) {

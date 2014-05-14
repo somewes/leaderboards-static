@@ -1,0 +1,36 @@
+$sidebar-width = 240px
+$header-height = 80px
+
+body
+	margin: 0
+
+#sidebar
+	position: fixed
+	width: $sidebar-width
+	height: 100%
+	background-color: rgb(238, 238, 238)
+
+#game-image
+	width: $sidebar-width - 40px
+	padding-left: 20px
+
+#content
+	padding-left: $sidebar-width
+	padding-top: $header-height
+
+#header
+	position: fixed
+	left: $sidebar-width
+	width: 100%
+	box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 5px
+	background-color: #9f499b
+	height: $header-height
+
+#header h1
+	color: white
+	font-family: "Open Sans",Helvetica,Arial,sans-serif
+	font-size: 24px
+	font-weight: normal
+	margin: 0
+	padding: 30px 0px 40px 60px
+	width: 100%

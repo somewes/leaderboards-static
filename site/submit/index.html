@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Leaderboards</title>
+	</head>
+	<body>
+		<div id="main"></div>
+
+		<script type="text/javascript" src="/lib/requirejs/require.js"></script>
+		<script type="text/javascript" src="/leaderboards/api/games/%%%game%%%.js"></script>
+		<script type="text/javascript" src="/leaderboards/api/platforms.js"></script>
+		<script type="text/javascript">
+			require(['/config.js'], function (config) {
+				require(['submit/page']);
+			});
+		</script>
+	</body>
+</html>

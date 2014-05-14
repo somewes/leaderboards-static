@@ -1,0 +1,24 @@
+<!-- <select class="tagselect-list" on-change="select" value="{{ selection }}">
+	<option value="">Value</option>
+{{# tag.values }}
+	<option value="{{id}}">{{name}}</option>
+{{/ tag.values }}
+</select> -->
+
+
+
+
+<!-- Usage: 
+	<tagblock tag="{{ }}" value="{{ }}" tageditable="true/false" valueeditable="true/false" on-tagchange="" on-valuechange="" />
+	-->
+
+<div class="tagblock">
+	<div class="tagblock_tag">
+		{{ tag.name }}
+	</div>
+	<div class="tagblock_value">
+		{{ value.name }}
+		<!-- {{# tag.type === 'list' }}
+		{{/ list }} -->
+	</div>
+</div>

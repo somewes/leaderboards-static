@@ -1,1 +1,0 @@
-This directory currently exists only to mock out data in absence of the server side of this app
