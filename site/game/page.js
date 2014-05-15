@@ -46,12 +46,22 @@ define(function (require) {
 	})
 
 	ractive.on('change-filter-game', function (event) {
-		ractive.set('gameFilter', true);
+		ractive.set('filter', null)
 	})
 
 	ractive.on('change-filter', function (event, filterid) {
-		ractive.set('gameFilter', false);
-		ractive.set('filter', _.findWhere(game.filters, { id: filterid }));
-	});
+		var filter = _.findWhere(game.filters, { id: filterid })
+		var tagblocks = _.map(game.tags, function (tag) {
+			return {
+				tag: tag,
+				tagvalues: _.map(_.intersection(filter.tagvalues, tag.tagvalues), function (tagvalueid) {
+					return _.findWhere(game.tagvalues, { id: tagvalueid })
+				})
+			}
+		})
+
+		ractive.set('filter', filter)
+		ractive.set('tagblocks', tagblocks)
+	})
 
 })

@@ -16,23 +16,27 @@
 
 <div id="content">
 
-{{# gameFilter }}
+{{# !filter }}
 	{{# game.filters }}
 		<h2>{{ name }}</h2>
 		{{>runs}}
 	{{/ game.filters }}
-{{/ gameFilter }}
+{{/ !filter }}
 
-{{# !gameFilter }}
-	{{# game.tags }}
-		{{# filter }}
-			{{# filterTag(this, ../this) }} 
-				Tagvalue: {{ name }}
-				<tagblock tag="{{ ../this }}" value="{{ game.tagvalues[.] }}" />
-			{{/ tagvalues }}
-		{{/ filter }}
-	{{/ game.tags }}
-{{/ !gameFilter }}
+{{# filter }}
+	{{# tagblocks }}
+		<tagblock tag="{{ tag }}" value="{{ tagvalues }}" />
+	{{/ tagblocks }}
+	<ul>
+	{{# game.speedruns }}
+		{{# filterRun(../this, .) }}
+		<li>
+			Runs
+		</li>
+		{{/ filterRun }}
+	{{/ game.speedruns }}
+	</ul>
+{{/ filter }}
 
 </div>
 
