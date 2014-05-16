@@ -3,8 +3,11 @@ define(function (require) {
 	var _        = require('lodash'),
 		moment   = require('moment'),
 		Ractive  = require('Ractive'),
+
 	    template = require('rv!./template'),
+
 		game     = require('game'),
+
 		R_tag    = require('components/tag'),
 		R_run    = require('components/run')
 
@@ -15,14 +18,40 @@ define(function (require) {
 	}
 
 
-	function filterRun(filter, run) {
-		console.log('[filterRuns]\nfilter: \n' + JSON.stringify(filter) + '\nrun:\n' + JSON.stringify(run));
+	function filterRuns(runs, filter) { // block filter
+		if (!filter) {
+			return
+		}
+
+		var tagblocks = _.filter(filter.tagblocks, function (tagblock) {
+			return tagblock.tagvalues.length > 0
+		})
+
+		return _.filter(runs, function (run) {
+			return _.all(tagblocks, function (tagblock) {
+				var values = tagblock.tagvalues;
+				return values.length > 0 && _.any(values, function (value) {
+					return _.contains(run.tagvalues, value.id)
+				})
+			})
+		})
 	}
 
 
-	function filterTag(filter, tag) {
-		return _.map(_.intersection(filter.tagvalues, tag.tagvalues), function (id) { return game.tagvalues[id] })
-	}
+	var blockFilters = _.map(game.filters, function (filter) {
+		return {
+			id: filter.id,
+			name: filter.name,
+			tagblocks: _.map(game.tags, function (tag) {
+				return {
+					tag: tag,
+					tagvalues: _.map(_.intersection(filter.tagvalues, tag.tagvalues), function (tagvalueid) {
+						return _.findWhere(game.tagvalues, { id: tagvalueid })
+					})
+				}
+			})
+		}
+	})
 
 
 	var ractive = new Ractive({
@@ -34,10 +63,8 @@ define(function (require) {
 			platforms: hashByProp(game.platforms, 'id'),
 			tags: hashByProp(game.tags, 'id'),
 			tagvalues: hashByProp(game.tagvalues, 'id'),
-
-			_: _,
-			filterRun: filterRun,
-			filterTag: filterTag
+			filters: blockFilters,
+			filterRuns: filterRuns
 		},
 		components: {
 			tagblock: R_tag,
@@ -46,22 +73,11 @@ define(function (require) {
 	})
 
 	ractive.on('change-filter-game', function (event) {
-		ractive.set('filter', null)
+		ractive.set('filter', undefined)
 	})
 
 	ractive.on('change-filter', function (event, filterid) {
-		var filter = _.findWhere(game.filters, { id: filterid })
-		var tagblocks = _.map(game.tags, function (tag) {
-			return {
-				tag: tag,
-				tagvalues: _.map(_.intersection(filter.tagvalues, tag.tagvalues), function (tagvalueid) {
-					return _.findWhere(game.tagvalues, { id: tagvalueid })
-				})
-			}
-		})
-
-		ractive.set('filter', filter)
-		ractive.set('tagblocks', tagblocks)
+		ractive.set('filter', _.findWhere(blockFilters, { id: filterid }))
 	})
 
 })

@@ -16,9 +16,11 @@
 	<div class="tagblock_tag">
 		{{ tag.name }}
 	</div>
-	<div class="tagblock_value">
-		{{ value.name }}
-		<!-- {{# tag.type === 'list' }}
-		{{/ list }} -->
-	</div>
+	<ul class="tagblock_valuelist">
+		{{# tagvalues }}
+		<li class="tagblock_value">
+			{{ name }}
+		</li>
+		{{/ tagvalues }}
+	</ul>
 </div>

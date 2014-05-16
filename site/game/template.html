@@ -2,52 +2,45 @@
 	<img id="game-image" src="/img/{{ game.abbreviation }}.png" />
 	<ul>
 		<li><a href="javascript:void(0)" on-click="change-filter-game">{{ game.name }}</a></li>
-		{{# game.filters }}
+		{{# filters }}
 		<li><a href="javascript:void(0)" on-click="change-filter:{{ id }}">{{ name }}</a></li>
-		{{/ game.filters }}
+		{{/ filters }}
 		<li><a href="javascript:void(0)" on-click="change-filter-all">All runs</a></li>
 	</ul>
 	<a href="/game/{{ game.abbreviation }}/submit">Submit</a>
 </div>
 
 <div id="header">
-	<h1>{{ game.name }}</h1>
+	<h1>{{ game.name }}{{# filter }} - {{ name }}{{/ filter }}</h1>
 </div>
 
 <div id="content">
 
-{{# !filter }}
-	{{# game.filters }}
+<!-- No filter - this is the game view, showing all filters -->
+{{^ filter }}
+	{{# filters }}
 		<h2>{{ name }}</h2>
-		{{>runs}}
-	{{/ game.filters }}
-{{/ !filter }}
+		<ul class="speedrunlist">
+		{{# filterRuns(game.speedruns, .) }}
+			<li class="speedrun">
+				<runblock run="{{.}}" />
+			</li>
+		{{/}}
+		</ul>
+	{{/ filters }}
+{{/ filter }}
 
 {{# filter }}
 	{{# tagblocks }}
-		<tagblock tag="{{ tag }}" value="{{ tagvalues }}" />
+		<tagblock tag="{{ tag }}" tagvalues="{{ tagvalues }}" />
 	{{/ tagblocks }}
-	<ul>
-	{{# game.speedruns }}
-		{{# filterRun(../this, .) }}
-		<li>
-			Runs
+	<ul class="speedrunlist">
+	{{# filterRuns(game.speedruns, .) }}
+		<li class="speedrun">
+			<runblock run="{{.}}" />
 		</li>
-		{{/ filterRun }}
-	{{/ game.speedruns }}
+	{{/}}
 	</ul>
 {{/ filter }}
 
 </div>
-
-<!-- {{>runs}} -->
-<ul>
-{{# game.speedruns }}
-	{{# filterRun(../this, .) }}
-	<li>
-		Runs
-	</li>
-	{{/ filterRun }}
-{{/ game.speedruns }}
-</ul>
-<!-- {{/runs}} -->
