@@ -32,3 +32,57 @@ body
 	margin: 0
 	padding: 20px 0px 20px 60px
 	width: 100%
+
+.speedrunlist
+	list-style-type: none
+	// Reset list styling
+	margin: 0
+	padding: 0
+
+
+
+// Tag component
+
+$tagblock-padding = 4px
+$tagblock-tag-color = #FFA319
+$tagblock-tag-color-inactive = #CCCCCC
+$tagblock-tagvalue-color = #FFC875
+
+.tagblock
+	display: inline-block
+	padding: $tagblock-padding
+	background-color: $tagblock-tag-color
+
+.tagblock.empty
+	background-color: $tagblock-tag-color-inactive
+
+.tagblock_tag
+	display: inline
+
+.tagblock_valuelist
+	display: inline-block
+	// Reset list styling
+	margin: 0
+	padding: 0
+
+.tagblock_value
+	display: inline
+	padding: 0 $tagblock-padding 0 $tagblock-padding
+	background-color: $tagblock-tagvalue-color
+
+
+// Run component
+
+.runblock
+	margin: 1em
+	padding: 0.2em 0 0.2em 1em
+	border-left: 1px solid grey
+
+.runblock_header
+	font-size: 120%
+
+.runblock_runner
+	font-weight: bold
+
+.runblock_time
+	padding-left: 2em

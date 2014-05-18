@@ -54,12 +54,27 @@ define(function (require) {
 	})
 
 
+	var augmentedRuns = _.map(game.speedruns, function (run) {
+		return _.assign(_.clone(run), {
+			tagblocks: _.map(game.tags, function (tag) {
+				return {
+					tag: tag,
+					tagvalues: _.map(_.intersection(run.tagvalues, tag.tagvalues), function (tagvalueid) {
+						return _.findWhere(game.tagvalues, { id: tagvalueid })
+					})
+				}
+			})
+		})
+	})
+
+
 	var ractive = new Ractive({
 		el: 'main',
 		template: template,
 		debug: true,
 		data: {
 			game: game,
+			augmentedRuns: augmentedRuns,
 			platforms: hashByProp(game.platforms, 'id'),
 			tags: hashByProp(game.tags, 'id'),
 			tagvalues: hashByProp(game.tagvalues, 'id'),

@@ -1,7 +1,8 @@
 define(function (require) {
 
 	var Ractive  = require('Ractive'),
-	    template = require('rv!./run')
+	    template = require('rv!./run'),
+	    R_tag    = require('components/tag')
 
 
 	// Returns duration string: "hh:mm:ss", "mm:ss" if no hours, ":ss" if no minutes
@@ -48,7 +49,10 @@ define(function (require) {
 		debug: true,
 		data: {
 			formatTime: formatTime
-		}
+		},
+		components: {
+			tagblock: R_tag
+		} 
 	})
 
 })
