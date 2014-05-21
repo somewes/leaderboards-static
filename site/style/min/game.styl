@@ -47,6 +47,7 @@ $tagblock-padding = 4px
 $tagblock-tag-color = #FFA319
 $tagblock-tag-color-inactive = #CCCCCC
 $tagblock-tagvalue-color = #FFC875
+$tagblock-tagvalue-color-inactive = #DDDDDD
 
 .tagblock
 	display: inline-block
@@ -68,6 +69,9 @@ $tagblock-tagvalue-color = #FFC875
 .tagblock_value
 	display: inline
 	padding: 0 $tagblock-padding 0 $tagblock-padding
+	background-color: $tagblock-tagvalue-color-inactive
+
+.tagblock_value.tagblock_selected
 	background-color: $tagblock-tagvalue-color
 
 

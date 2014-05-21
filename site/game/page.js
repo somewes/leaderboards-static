@@ -34,12 +34,12 @@ define(function (require) {
 			}
 
 			var tagblocks = _.filter(filter.tagblocks, function (tagblock) {
-				return tagblock.tagvalues.length > 0
+				return tagblock.selectedvalues.length > 0
 			})
 
 			return _.filter(runs, function (run) {
 				return _.all(tagblocks, function (tagblock) {
-					var values = tagblock.tagvalues;
+					var values = tagblock.selectedvalues;
 					return values.length > 0 && _.any(values, function (value) {
 						return _.contains(run.tagvalues, value.id)
 					})
@@ -56,11 +56,17 @@ define(function (require) {
 				id: filter.id,
 				name: filter.name,
 				tagblocks: _.map(game.tags, function (tag) {
+					var selectedvalues = hashByProp(_.map(_.intersection(filter.tagvalues, tag.tagvalues), function (tagvalueid) {
+						return _.findWhere(game.tagvalues, { id: tagvalueid })
+					}), 'id')
+
+					tag.tagvalueobjs = _.map(tag.tagvalues, function (tagvalueid) {
+						return _.findWhere(game.tagvalues, { id: tagvalueid })
+					})
+
 					return {
 						tag: tag,
-						tagvalues: _.map(_.intersection(filter.tagvalues, tag.tagvalues), function (tagvalueid) {
-							return _.findWhere(game.tagvalues, { id: tagvalueid })
-						})
+						selectedvalues: selectedvalues
 					}
 				})
 			}

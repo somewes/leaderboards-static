@@ -1,16 +1,16 @@
-<!-- Usage: 
-	<tagblock tag="{{ }}" value="{{ }}" tageditable="true/false" valueeditable="true/false" on-tagchange="" on-valuechange="" />
+<!-- Usage:
+	<tagblock tag="{{ }}" selectedvalues="{{ }}" editable="true/false" on-tagchange="" on-valuechange="" />
 	-->
 
-<div class="tagblock {{^ tagvalues }}empty{{/}}">
+<div class="tagblock{{^ selectedvalues }} empty{{/}}{{# editable }} editable{{/}}">
 	<div class="tagblock_tag">
 		{{ tag.name }}
 	</div>
 	<ul class="tagblock_valuelist">
-		{{# tagvalues }}
-		<li class="tagblock_value">
+	{{# tag.tagvalueobjs }}
+		<li class="tagblock_value{{# selectedvalues[id] }} tagblock_selected{{/}}" on-click="select:id">
 			{{ name }}
 		</li>
-		{{/ tagvalues }}
+	{{/ tag.tagvalueobjs }}
 	</ul>
 </div>
