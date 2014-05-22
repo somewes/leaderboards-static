@@ -34,13 +34,13 @@ define(function (require) {
 			}
 
 			var tagblocks = _.filter(filter.tagblocks, function (tagblock) {
-				return tagblock.selectedvalues.length > 0
+				return _.keys(tagblock.selectedvalues).length > 0
 			})
 
 			return _.filter(runs, function (run) {
 				return _.all(tagblocks, function (tagblock) {
 					var values = tagblock.selectedvalues;
-					return values.length > 0 && _.any(values, function (value) {
+					return _.keys(values).length > 0 && _.any(values, function (value) {
 						return _.contains(run.tagvalues, value.id)
 					})
 				})
@@ -75,11 +75,14 @@ define(function (require) {
 		augmentedRuns: _.map(game.speedruns, function (run) {
 			return _.assign(_.clone(run), {
 				tagblocks: _.map(game.tags, function (tag) {
+					tag.tagvalueobjs = _.map(tag.tagvalues, function (tagvalueid) {
+						return _.findWhere(game.tagvalues, { id: tagvalueid })
+					})
 					return {
 						tag: tag,
-						tagvalues: _.map(_.intersection(run.tagvalues, tag.tagvalues), function (tagvalueid) {
+						selectedvalues: hashByProp(_.map(_.intersection(run.tagvalues, tag.tagvalues), function (tagvalueid) {
 							return _.findWhere(game.tagvalues, { id: tagvalueid })
-						})
+						}), 'id')
 					}
 				})
 			})
