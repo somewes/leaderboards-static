@@ -21,7 +21,7 @@
 	{{# filters }}
 		<h2>{{ name }}</h2>
 		<ul class="speedrunlist">
-		{{# limit(filterRuns(augmentedRuns, .), displaylength) }}
+		{{# _first(filterRuns(augmentedRuns, .), displaylength) }}
 			<li class="speedrun">
 				<runblock run="{{.}}" />
 			</li>

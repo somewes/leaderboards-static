@@ -10,7 +10,6 @@ define(function (require) {
 		template: template,
 		debug: true,
 		data: {
-			isEmpty: _.isEmpty
 		},
 		init: function () {
 			var self = this
@@ -23,6 +22,7 @@ define(function (require) {
 				}
 				self.update('selectedvalues')
 			})
+			_isEmpty: _.isEmpty
 		}
 	})
 

@@ -28,6 +28,8 @@ define(function (require) {
 
 		tagvalues: hashByProp(game.tagvalues, 'id'),
 
+		_first: _.first,
+
 		filterRuns: function filterRuns(runs, filter) { // block filter
 			if (!filter) {
 				return
@@ -45,10 +47,6 @@ define(function (require) {
 					})
 				})
 			})
-		},
-
-		limit: function limit(list, length) {
-			return _.first(list, length)
 		},
 
 		filters: _.map(game.filters, function (filter) {
