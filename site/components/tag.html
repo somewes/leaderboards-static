@@ -2,7 +2,7 @@
 	<tagblock tag="{{ }}" selectedvalues="{{ }}" editable="true/false" on-tagchange="" on-valuechange="" />
 	-->
 
-<div class="tagblock{{^ selectedvalues }} empty{{/}}{{# editable }} editable{{/}}">
+<div class="tagblock{{# isEmpty(selectedvalues) }} empty{{/}}{{# editable }} editable{{/}}">
 	<div class="tagblock_tag">
 		{{ tag.name }}
 	</div>
