@@ -15,10 +15,13 @@ define(function (require) {
 		init: function () {
 			var self = this
 			self.on('toggle', function (event) {
-				var tagvalue = event.context;
-				var keypath = 'selectedvalues[' + tagvalue.id +']'
-				var selected = self.get(keypath)
-				self.set(keypath, selected ? undefined : tagvalue)
+				var tagvalue = event.context
+				if (self.data.selectedvalues[tagvalue.id]) {
+					delete self.data.selectedvalues[tagvalue.id]
+				} else {
+					self.data.selectedvalues[tagvalue.id] = tagvalue
+				}
+				self.update('selectedvalues')
 			})
 		}
 	})
