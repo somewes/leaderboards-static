@@ -112,7 +112,6 @@ define(function (require) {
 	})
 
 	var allRunsFilter = {
-		name: 'All runs',
 		tagblocks: _.map(game.tags, function (tag) {
 			return {
 				tag: tag,

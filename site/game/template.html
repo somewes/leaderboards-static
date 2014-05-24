@@ -1,17 +1,17 @@
 <div id="sidebar">
 	<img id="game-image" src="/img/{{ game.abbreviation }}.png" />
-	<ul>
-		<li><a href="javascript:void(0)" on-click="change-filter-game">{{ game.name }}</a></li>
+	<ul id="filter-nav">
+		<li class="{{^ filter }}active{{/}}"><a href="javascript:void(0)" on-click="change-filter-game">{{ game.name }}</a></li>
 		{{# filters }}
-		<li><a href="javascript:void(0)" on-click="change-filter:{{ id }}">{{ name }}</a></li>
+		<li class="{{# filter.id === id }}active{{/}}"><a href="javascript:void(0)" on-click="change-filter:{{ id }}">{{ name }}</a></li>
 		{{/ filters }}
-		<li><a href="javascript:void(0)" on-click="change-filter-all">All runs</a></li>
+		<li class="{{# filter && !filter.id }}active{{/}}"><a href="javascript:void(0)" on-click="change-filter-all">All runs</a></li>
 	</ul>
 	<a href="/game/{{ game.abbreviation }}/submit">Submit</a>
 </div>
 
 <div id="header">
-	<h1>{{ game.name }}{{# filter }} - {{ name }}{{/ filter }}</h1>
+	<h1>{{ game.name }}</h1>
 </div>
 
 <div id="content">
