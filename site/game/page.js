@@ -124,4 +124,23 @@ define(function (require) {
 		ractive.set('filter', allRunsFilter)
 	})
 
+
+	ractive.on('selecttagvalue', function (event) {
+		var tagvalue = event.context
+
+		var allRunsfilter = {
+			tagblocks: _.cloneDeep(ractive.get('filter.tagblocks'))
+		}
+
+		var selectedtagblock = _.findWhere(allRunsfilter.tagblocks, { tag: { id: tagvalue.tag } })
+
+		if ( selectedtagblock.selectedvalues[ tagvalue.id ] ) {
+			delete selectedtagblock.selectedvalues[ tagvalue.id ]
+		} else {
+			selectedtagblock.selectedvalues[ tagvalue.id ] = tagvalue
+		}
+
+		ractive.set('filter', allRunsfilter)
+	})
+
 })

@@ -32,7 +32,7 @@
 
 {{# filter }}
 	{{# tagblocks }}
-		<tagblock tag="{{ tag }}" selectedvalues="{{ selectedvalues }}" editable="true" />
+		<tagblock tag="{{ tag }}" selectedvalues="{{ selectedvalues }}" editable="true" on-selecttagvalue="selecttagvalue" />
 	{{/ tagblocks }}
 	<ul class="speedrunlist">
 	{{# filterRuns(augmentedRuns, .) }}
