@@ -39,13 +39,15 @@ define(function (require) {
 				return _.keys(tagblock.selectedvalues).length > 0
 			})
 
-			return _.filter(runs, function (run) {
+			return _.uniq(_.filter(runs, function (run) {
 				return _.all(tagblocks, function (tagblock) {
 					var values = tagblock.selectedvalues
 					return _.keys(values).length > 0 && _.any(values, function (value) {
 						return _.contains(run.tagvalues, value.id)
 					})
 				})
+			}), function (run) {
+				return run.user.username
 			})
 		},
 
