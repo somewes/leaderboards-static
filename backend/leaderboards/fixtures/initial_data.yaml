@@ -1,0 +1,219 @@
+- fields: {name: Nintendo 64}
+  model: leaderboards.platform
+  pk: 1
+- fields: {name: Nintendo Wii}
+  model: leaderboards.platform
+  pk: 2
+- fields:
+    name: Super Mario 64
+    platforms: [1, 2]
+  model: leaderboards.game
+  pk: sm64
+- fields: {game: sm64, name: Category, timed: true, type: list}
+  model: leaderboards.tag
+  pk: 1
+- fields: {game: sm64, name: BLJ, timed: true, type: boolean}
+  model: leaderboards.tag
+  pk: 2
+- fields: {game: sm64, name: Controller, timed: false, type: list}
+  model: leaderboards.tag
+  pk: 3
+- fields: {description: any% desc, game: sm64, name: Any%, tag: 1}
+  model: leaderboards.tagvalue
+  pk: 1
+- fields: {description: 70 star desc, game: sm64, name: 70 star, tag: 1}
+  model: leaderboards.tagvalue
+  pk: 2
+- fields: {description: 100% desc, game: sm64, name: 100%, tag: 1}
+  model: leaderboards.tagvalue
+  pk: 3
+- fields: {description: BLJ True desc, game: sm64, name: 'True', tag: 2}
+  model: leaderboards.tagvalue
+  pk: 4
+- fields: {description: BLJ False desc, game: sm64, name: 'False', tag: 2}
+  model: leaderboards.tagvalue
+  pk: 5
+- fields: {description: Hori desc, game: sm64, name: Hori, tag: 3}
+  model: leaderboards.tagvalue
+  pk: 6
+- fields: {description: Factory desc, game: sm64, name: Factory, tag: 3}
+  model: leaderboards.tagvalue
+  pk: 7
+- fields:
+    comments: comments
+    game: sm64
+    platform: 1
+    tagvalues: [1, 4, 6]
+    time: 6000000
+    user: 1
+    video: https://www.youtube.com/watch?v=oT3mCybbhf0
+  model: leaderboards.speedrun
+  pk: 1
+- fields:
+    comments: comments 7
+    game: sm64
+    platform: 1
+    tagvalues: [1, 5]
+    time: 7000000
+    user: 1
+    video: https://www.youtube.com/watch?v=oT3mCybbhf0
+  model: leaderboards.speedrun
+  pk: 2
+- fields:
+    comments: Good run
+    game: sm64
+    platform: 1
+    tagvalues: [2, 5]
+    time: 12001000
+    user: 3
+    video: http://youtube.com
+  model: leaderboards.speedrun
+  pk: 3
+- fields:
+    comments: Video is fast
+    game: sm64
+    platform: 1
+    tagvalues: [3, 4]
+    time: 24001000
+    user: 3
+    video: http://youtube.com
+  model: leaderboards.speedrun
+  pk: 4
+- fields:
+    comments: Ok
+    game: sm64
+    platform: 1
+    tagvalues: [3, 5, 6]
+    time: 36001000
+    user: 3
+    video: http://twitch.tv
+  model: leaderboards.speedrun
+  pk: 5
+- fields:
+    comments: fast
+    game: sm64
+    platform: 1
+    tagvalues: [1, 4, 7]
+    time: 7261060
+    user: 3
+    video: http://youtube.com
+  model: leaderboards.speedrun
+  pk: 6
+- fields:
+    comments: ok
+    game: sm64
+    platform: 2
+    tagvalues: [1, 4, 7]
+    time: 7261000
+    user: 3
+    video: http://twitch.tv
+  model: leaderboards.speedrun
+  pk: 7
+- fields:
+    comments: twitch video goes fast
+    game: sm64
+    platform: 2
+    tagvalues: [1, 4, 6]
+    time: 7260000
+    user: 3
+    video: http://twitch.tv
+  model: leaderboards.speedrun
+  pk: 8
+- fields:
+    comments: goes fast
+    game: sm64
+    platform: 2
+    tagvalues: [3, 5, 7]
+    time: 10740000
+    user: 2
+    video: http://youtube.com
+  model: leaderboards.speedrun
+  pk: 9
+- fields:
+    comments: fast enough
+    game: sm64
+    platform: 2
+    tagvalues: [3, 5, 6]
+    time: 10741200
+    user: 2
+    video: http://youtube.com
+  model: leaderboards.speedrun
+  pk: 10
+- fields:
+    comments: fast
+    game: sm64
+    platform: 1
+    tagvalues: [1, 4]
+    time: 546000
+    user: 4
+    video: http://youtube.com
+  model: leaderboards.speedrun
+  pk: 11
+- fields:
+    comments: go fast
+    game: sm64
+    platform: 2
+    tagvalues: [1, 4, 6]
+    time: 540600
+    user: 4
+    video: http://youtube.com
+  model: leaderboards.speedrun
+  pk: 12
+- fields:
+    comments: youtube video fast
+    game: sm64
+    platform: 2
+    tagvalues: [2, 5]
+    time: 3361000
+    user: 4
+    video: http://youtube.com
+  model: leaderboards.speedrun
+  pk: 13
+- fields:
+    comments: goes fast
+    game: sm64
+    platform: 2
+    tagvalues: [1, 4, 7]
+    time: 601000
+    user: 2
+    video: http://youtube.com
+  model: leaderboards.speedrun
+  pk: 14
+- fields:
+    comments: goes fast
+    game: sm64
+    platform: 1
+    tagvalues: [1, 4, 7]
+    time: 602000
+    user: 2
+    video: http://youtube.com
+  model: leaderboards.speedrun
+  pk: 15
+- fields:
+    displaylength: 2
+    game: sm64
+    name: Any% BLJ
+    tagvalues: [1, 4]
+  model: leaderboards.filter
+  pk: 1
+- fields:
+    displaylength: 2
+    game: sm64
+    name: Any% No BLJ
+    tagvalues: [1, 5]
+  model: leaderboards.filter
+  pk: 2
+- fields:
+    displaylength: 2
+    game: sm64
+    name: 70 Star
+    tagvalues: [2]
+  model: leaderboards.filter
+  pk: 3
+- fields:
+    displaylength: 2
+    game: sm64
+    name: 100%
+    tagvalues: [3]
+  model: leaderboards.filter
+  pk: 4

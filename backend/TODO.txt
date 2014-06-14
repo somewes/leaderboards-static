@@ -1,0 +1,11 @@
+- replace tastypie with rest framework
+  x port read-only api
+  x port writable api
+    x fix writable tags list
+  x port login
+    ? set cookie in login response
+  - port authorization and authentication
+  x make .json and .js work
+    x wrap .js with require
+- merge and push
+- fix time display (ms)
